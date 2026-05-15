@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deccara - Chat Lebih Rapi, Booking Lebih Mudah</title>
+  <style>
+    :root {
+      --blue: #1e3a8a;
+      --blue-dark: #172554;
+      --teal: #0f766e;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --slate: #334155;
+      --muted: #64748b;
+      --cloud: #f1f5f9;
+      --line: #dbe3ef;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--slate);
+      background: var(--white);
+      font-family: Inter, "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      overflow: hidden;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(219, 227, 239, 0.9);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-inner,
+    .section-inner {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .nav-inner {
+      display: flex;
+      min-height: 72px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--blue-dark);
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--white);
+      background: var(--blue);
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: var(--blue);
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 0 18px;
+      font-weight: 800;
+      line-height: 1;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+      white-space: nowrap;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      color: var(--white);
+      background: var(--green);
+      box-shadow: 0 14px 28px rgba(34, 197, 94, 0.22);
+    }
+
+    .button-secondary {
+      color: var(--blue);
+      border-color: var(--line);
+      background: var(--white);
+    }
+
+    .hero {
+      padding: 84px 0 64px;
+      background:
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      align-items: center;
+      gap: 56px;
+      grid-template-columns: minmax(0, 1fr) minmax(430px, 0.95fr);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      color: var(--teal);
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--green);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin-bottom: 20px;
+      color: var(--blue-dark);
+      font-size: clamp(2.45rem, 6vw, 4.6rem);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 610px;
+      margin-bottom: 28px;
+      color: var(--muted);
+      font-size: 1.15rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .proof-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .proof-item {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: var(--white);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 540px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(15, 118, 110, 0.08) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(30, 58, 138, 0.08) 1px, transparent 1px),
+        #f8fafc;
+      background-size: 44px 44px;
+      padding: 24px;
+    }
+
+    .mockup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      padding: 8px 10px;
+      color: #166534;
+      background: #dcfce7;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .status-pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--green);
+    }
+
+    .workflow {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
+    }
+
+    .panel-wide {
+      grid-column: 1 / -1;
+    }
+
+    .panel-pad {
+      padding: 18px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      color: var(--blue-dark);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .mini-tag {
+      border-radius: 999px;
+      padding: 5px 8px;
+      color: var(--teal);
+      background: #ccfbf1;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .chat-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .chat-bubble {
+      max-width: 92%;
+      border-radius: 8px;
+      padding: 11px 12px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .chat-bubble.customer {
+      color: var(--slate);
+      background: var(--cloud);
+    }
+
+    .chat-bubble.deccara {
+      justify-self: end;
+      color: var(--white);
+      background: var(--teal);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .date-cell {
+      min-height: 52px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px;
+      color: var(--muted);
+      background: #f8fafc;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .date-cell.active {
+      color: #166534;
+      border-color: #86efac;
+      background: #dcfce7;
+    }
+
+    .lead-row {
+      display: grid;
+      gap: 10px;
+    }
+
+    .lead-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .lead-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .lead-value {
+      color: var(--blue-dark);
+      text-align: right;
+    }
+
+    .flow-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .flow-step {
+      min-height: 88px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #f8fafc;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--blue-dark);
+      font-size: 0.84rem;
+    }
+
+    .flow-step span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+
+    .section {
+      padding: 82px 0;
+    }
+
+    .section-soft {
+      background: var(--cloud);
+    }
+
+    .section-kicker {
+      margin-bottom: 10px;
+      color: var(--teal);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 18px;
+      color: var(--blue-dark);
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .section-copy {
+      max-width: 760px;
+      margin-bottom: 36px;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .problem-grid,
+    .solution-grid,
+    .use-case-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .problem-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .solution-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .use-case-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .info-card {
+      min-height: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      background: var(--white);
+    }
+
+    .section-soft .info-card {
+      background: var(--white);
+    }
+
+    .card-icon {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      margin-bottom: 18px;
+      border-radius: 8px;
+      color: var(--white);
+      background: var(--blue);
+      font-size: 0.88rem;
+      font-weight: 900;
+    }
+
+    .card-icon.teal {
+      background: var(--teal);
+    }
+
+    .card-icon.green {
+      background: var(--green);
+    }
+
+    .card-icon.amber {
+      background: var(--amber);
+    }
+
+    .info-card h3 {
+      margin-bottom: 9px;
+      color: var(--blue-dark);
+      font-size: 1.15rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .info-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .use-case-list {
+      display: grid;
+      gap: 10px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .use-case-list li {
+      display: flex;
+      gap: 10px;
+      color: var(--slate);
+      font-size: 0.92rem;
+      font-weight: 650;
+    }
+
+    .use-case-list li::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 8px;
+      height: 8px;
+      margin-top: 9px;
+      border-radius: 999px;
+      background: var(--green);
+    }
+
+    .solution-band {
+      display: grid;
+      align-items: center;
+      gap: 28px;
+      grid-template-columns: 0.9fr 1.1fr;
+      margin-bottom: 28px;
+    }
+
+    .metrics {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: var(--white);
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--blue);
+      font-size: 1.55rem;
+      line-height: 1;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .cta {
+      color: var(--white);
+      background: var(--blue-dark);
+    }
+
+    .cta .section-inner {
+      display: grid;
+      align-items: center;
+      gap: 28px;
+      grid-template-columns: 1fr auto;
+    }
+
+    .cta h2 {
+      max-width: 780px;
+      margin-bottom: 12px;
+      color: var(--white);
+      font-size: clamp(2rem, 4vw, 3.15rem);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .cta p {
+      max-width: 680px;
+      margin-bottom: 0;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .cta .button-secondary {
+      color: var(--white);
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 24px 0;
+      color: var(--muted);
+      background: var(--white);
+      font-size: 0.9rem;
+      font-weight: 650;
+    }
+
+    .footer .section-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    @media (max-width: 980px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 58px;
+      }
+
+      .hero-grid,
+      .solution-band,
+      .cta .section-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: auto;
+      }
+
+      .solution-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .problem-grid,
+      .use-case-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-actions {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-inner,
+      .section-inner {
+        width: min(100% - 28px, 1120px);
+      }
+
+      .nav-inner {
+        min-height: 64px;
+      }
+
+      .nav .button {
+        display: none;
+      }
+
+      .hero,
+      .section {
+        padding: 54px 0;
+      }
+
+      .hero-grid {
+        gap: 36px;
+      }
+
+      .hero-copy,
+      .section-copy {
+        font-size: 1rem;
+      }
+
+      .hero-actions,
+      .cta-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .hero-visual {
+        padding: 14px;
+      }
+
+      .workflow,
+      .flow-strip,
+      .metrics,
+      .solution-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel-wide {
+        grid-column: auto;
+      }
+
+      .calendar-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .info-card {
+        padding: 20px;
+      }
+
+      .footer .section-inner {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="#top" aria-label="Deccara home">
+          <span class="brand-mark">D</span>
+          <span>Deccara</span>
+        </a>
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#problem">Problem</a>
+          <a href="#solution">Solution</a>
+          <a href="#use-cases">Use Cases</a>
+        </nav>
+        <a class="button button-primary" href="#cta">Jadwalkan Demo</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="section-inner hero-grid">
+          <div>
+            <p class="eyebrow">Chatbot automation untuk bisnis jasa</p>
+            <h1 id="hero-title">Deccara ubah chat pelanggan menjadi booking yang rapi.</h1>
+            <p class="hero-copy">Bantu admin membalas chat lebih cepat, mencatat kebutuhan pelanggan, mengatur appointment, dan mengirim reminder tanpa sistem IT yang rumit.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#cta">Jadwalkan Demo</a>
+              <a class="button button-secondary" href="#solution">Lihat Cara Kerjanya</a>
+            </div>
+            <div class="proof-row" aria-label="Industri yang cocok">
+              <span class="proof-item">Klinik kecantikan</span>
+              <span class="proof-item">Travel umroh</span>
+              <span class="proof-item">Agen properti</span>
+              <span class="proof-item">Bisnis appointment</span>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Mockup alur Deccara dari chat ke booking">
+            <div class="mockup-header">
+              <span>Deccara Front Office Flow</span>
+              <span class="status-pill">Automation Active</span>
+            </div>
+
+            <div class="workflow">
+              <div class="panel panel-pad">
+                <div class="panel-title">
+                  <span>Incoming Chat</span>
+                  <span class="mini-tag">New inquiry</span>
+                </div>
+                <div class="chat-list">
+                  <div class="chat-bubble customer">Halo, masih ada jadwal konsultasi hari Sabtu?</div>
+                  <div class="chat-bubble deccara">Ada. Mau pilih jam 10.00 atau 14.00?</div>
+                  <div class="chat-bubble customer">Jam 14.00, untuk treatment wajah.</div>
+                </div>
+              </div>
+
+              <div class="panel panel-pad">
+                <div class="panel-title">
+                  <span>Appointment</span>
+                  <span class="mini-tag">Confirmed</span>
+                </div>
+                <div class="calendar-grid">
+                  <div class="date-cell">Sen<br>09.00</div>
+                  <div class="date-cell">Rab<br>11.00</div>
+                  <div class="date-cell active">Sab<br>14.00</div>
+                  <div class="date-cell">Min<br>16.00</div>
+                </div>
+              </div>
+
+              <div class="panel panel-pad">
+                <div class="panel-title">
+                  <span>Lead Capture</span>
+                  <span class="mini-tag">Ready</span>
+                </div>
+                <div class="lead-row">
+                  <div class="lead-item">
+                    <span>Nama</span>
+                    <span class="lead-value">Customer baru</span>
+                  </div>
+                  <div class="lead-item">
+                    <span>Layanan</span>
+                    <span class="lead-value">Treatment wajah</span>
+                  </div>
+                  <div class="lead-item">
+                    <span>Status</span>
+                    <span class="lead-value">Perlu reminder</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-pad">
+                <div class="panel-title">
+                  <span>Follow-Up</span>
+                  <span class="mini-tag">H-1</span>
+                </div>
+                <div class="chat-list">
+                  <div class="chat-bubble deccara">Reminder otomatis terkirim besok pagi.</div>
+                  <div class="chat-bubble customer">Terima kasih, saya konfirmasi hadir.</div>
+                </div>
+              </div>
+
+              <div class="panel panel-pad panel-wide">
+                <div class="panel-title">
+                  <span>Workflow Summary</span>
+                  <span class="mini-tag">Rapi</span>
+                </div>
+                <div class="flow-strip">
+                  <div class="flow-step">
+                    <strong>1. Chat masuk</strong>
+                    <span>Pertanyaan pelanggan ditangkap cepat.</span>
+                  </div>
+                  <div class="flow-step">
+                    <strong>2. Data dicatat</strong>
+                    <span>Kebutuhan dan kontak masuk ke lead.</span>
+                  </div>
+                  <div class="flow-step">
+                    <strong>3. Jadwal dipilih</strong>
+                    <span>Slot booking dibuat lebih terstruktur.</span>
+                  </div>
+                  <div class="flow-step">
+                    <strong>4. Reminder jalan</strong>
+                    <span>Follow-up tidak lagi serba manual.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="problem" aria-labelledby="problem-title">
+        <div class="section-inner">
+          <p class="section-kicker">Problem</p>
+          <h2 class="section-heading" id="problem-title">Banyak bisnis kehilangan peluang dari chat yang tidak tertangani rapi.</h2>
+          <p class="section-copy">Saat chat pelanggan masuk dari banyak channel, admin harus menjawab pertanyaan berulang, mencatat data manual, mengatur jadwal, dan mengingat follow-up. Peluang booking mudah hilang ketika prosesnya masih tercecer.</p>
+
+          <div class="problem-grid">
+            <article class="info-card">
+              <div class="card-icon">01</div>
+              <h3>Respons chat terlambat</h3>
+              <p>Pelanggan yang menunggu terlalu lama bisa pindah ke kompetitor sebelum admin sempat membalas.</p>
+            </article>
+
+            <article class="info-card">
+              <div class="card-icon teal">02</div>
+              <h3>Booking masih manual</h3>
+              <p>Jadwal, kebutuhan layanan, dan detail pelanggan sering tersebar di chat, catatan, atau spreadsheet.</p>
+            </article>
+
+            <article class="info-card">
+              <div class="card-icon amber">03</div>
+              <h3>Follow-up tidak konsisten</h3>
+              <p>Lead yang sudah tertarik bisa hilang karena status pelanggan dan reminder tidak tersusun dengan jelas.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-soft" id="solution" aria-labelledby="solution-title">
+        <div class="section-inner">
+          <div class="solution-band">
+            <div>
+              <p class="section-kicker">Solution</p>
+              <h2 class="section-heading" id="solution-title">Deccara menjadi front-office assistant digital untuk bisnis jasa.</h2>
+              <p class="section-copy">Deccara membantu mengubah chat pelanggan menjadi alur yang lebih terstruktur: inquiry ditangkap, kebutuhan dicatat, booking diarahkan, reminder dikirim, dan tim bisa melakukan follow-up dengan data yang lebih jelas.</p>
+            </div>
+
+            <div class="metrics" aria-label="Manfaat Deccara">
+              <div class="metric">
+                <strong>Fast</strong>
+                <span>Respons awal tanpa menunggu admin selalu online.</span>
+              </div>
+              <div class="metric">
+                <strong>Rapi</strong>
+                <span>Data pelanggan, layanan, dan jadwal lebih mudah dilacak.</span>
+              </div>
+              <div class="metric">
+                <strong>Siap</strong>
+                <span>Lead dan follow-up tersusun untuk admin atau sales.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="solution-grid">
+            <article class="info-card">
+              <div class="card-icon">C</div>
+              <h3>Chatbot FAQ</h3>
+              <p>Menjawab pertanyaan awal pelanggan dengan bahasa yang mudah dipahami.</p>
+            </article>
+
+            <article class="info-card">
+              <div class="card-icon teal">B</div>
+              <h3>Booking flow</h3>
+              <p>Mengarahkan pelanggan memilih layanan, tanggal, dan waktu appointment.</p>
+            </article>
+
+            <article class="info-card">
+              <div class="card-icon green">L</div>
+              <h3>Lead capture</h3>
+              <p>Mencatat kebutuhan, kontak, dan status calon pelanggan secara terstruktur.</p>
+            </article>
+
+            <article class="info-card">
+              <div class="card-icon amber">R</div>
+              <h3>Reminder otomatis</h3>
+              <p>Membantu mengirim pengingat dan follow-up agar pelanggan tidak terlupakan.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="use-cases" aria-labelledby="use-cases-title">
+        <div class="section-inner">
+          <p class="section-kicker">Use Cases</p>
+          <h2 class="section-heading" id="use-cases-title">Dibuat untuk bisnis yang hidup dari chat, appointment, dan follow-up.</h2>
+          <p class="section-copy">Setiap industri bisa memakai alur chatbot yang berbeda, tetapi tujuannya sama: membuat percakapan pelanggan lebih cepat ditangani dan lebih mudah ditindaklanjuti.</p>
+
+          <div class="use-case-grid">
+            <article class="info-card">
+              <div class="card-icon">KC</div>
+              <h3>Beauty clinic</h3>
+              <p>Untuk klinik kecantikan yang menerima pertanyaan treatment, konsultasi, dan jadwal kunjungan.</p>
+              <ul class="use-case-list">
+                <li>Menjawab pertanyaan treatment</li>
+                <li>Booking konsultasi dan appointment</li>
+                <li>Reminder kunjungan dan follow-up setelah treatment</li>
+              </ul>
+            </article>
+
+            <article class="info-card">
+              <div class="card-icon teal">TU</div>
+              <h3>Umroh travel</h3>
+              <p>Untuk travel umroh yang perlu merespons pertanyaan paket dan mengelola calon jamaah.</p>
+              <ul class="use-case-list">
+                <li>Menjawab pertanyaan paket umroh</li>
+                <li>Mengumpulkan data calon jamaah</li>
+                <li>Menjadwalkan konsultasi dan follow-up</li>
+              </ul>
+            </article>
+
+            <article class="info-card">
+              <div class="card-icon green">AP</div>
+              <h3>Property agent</h3>
+              <p>Untuk agen properti yang menangkap lead, mencatat kebutuhan, dan mengatur jadwal viewing.</p>
+              <ul class="use-case-list">
+                <li>Mencatat budget dan kebutuhan properti</li>
+                <li>Mengirim rekomendasi unit</li>
+                <li>Menjadwalkan viewing dengan sales</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section cta" id="cta" aria-labelledby="cta-title">
+        <div class="section-inner">
+          <div>
+            <p class="section-kicker">Mulai otomatisasi chat</p>
+            <h2 id="cta-title">Siapkan alur chat bisnis Anda agar lebih cepat, rapi, dan mudah ditindaklanjuti.</h2>
+            <p>Diskusikan proses inquiry, booking, appointment, dan follow-up yang paling sering terjadi di bisnis Anda. Deccara membantu menyusunnya menjadi chatbot automation yang praktis.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="button button-primary" href="mailto:hello@deccara.id">Konsultasi Gratis</a>
+            <a class="button button-secondary" href="#top">Kembali ke Atas</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="section-inner">
+        <span>Deccara</span>
+        <span>Chat lebih rapi. Booking lebih mudah.</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
